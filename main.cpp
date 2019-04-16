@@ -43,10 +43,10 @@ int main()
 
     ifstream LOGF("LOGS.txt",ios_base::in);
     system("cls");
-    string filename;
+    string fhdhfgd;
     int z;
     int setsize=0;
-
+  // PIPISLA
     for (;;)
     {
         cout << " Напиши 'міста', щоб вибрати тему гри 'міста України'\n\t'країни', щоб вибрати тему гри 'країни світу (члени ООН)' \n\t'прізвища', щоб вибрати тему 'Прізвища 143 групи'"<<endl;
