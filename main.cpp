@@ -2,7 +2,7 @@
 #include <string>
 #include <stdlib.h>
 #include <windows.h>
-#include <fstream>
+#include <fstream>  // ЩОБ ВИВОДИЛО СЛОВА ЧЕРЕЗ ПРОБІЛИ!!!!!!!!!!!!!!!!
 #include <conio.h>
 #include <iterator>
 #include <algorithm>
@@ -43,10 +43,9 @@ int main()
 
     ifstream LOGF("LOGS.txt",ios_base::in);
     system("cls");
-    string fhdhfgd;
+    string filename;
     int z;
     int setsize=0;
-  // PIPISLA
     for (;;)
     {
         cout << " Напиши 'міста', щоб вибрати тему гри 'міста України'\n\t'країни', щоб вибрати тему гри 'країни світу (члени ООН)' \n\t'прізвища', щоб вибрати тему 'Прізвища 143 групи'"<<endl;
@@ -124,15 +123,29 @@ int main()
             cout<<"Я повинна сказати слово на букву - "<<b<<endl;
             //NameFile[0] == b;//Шукаємо відповідь в файлі
             file.open(filename.c_str(),ios_base::in);
-            string word;
-            word = "";
+            char word;
+           // word = "";
             i=0;//ітератор
 
             while(!file.eof())
             {
                 f=1;//добавить слово в обработку
+               /*while (word[word.length()] ==' ')
+                {
+                if (word[word.length()+1] != ' ')
+                {
+*/
+ ///////////////////// ОТУУУУУУУУУУУУУУУУУУУУУУУУУУТ
                 file>>word;//новое слово в словаре
+                if (word[strlen(word)] == ' ')
+                {
 
+                char word2;
+                //word2="";
+                file >> word2;
+                strcat(word2,word)
+                cout << word2 << "HAHAHH"<<endl;
+}
                 f = !(searchinLOG(word));
                 if( word[0] != b )
                     f=0;
