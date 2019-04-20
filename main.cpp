@@ -13,6 +13,7 @@
 #include "Gamefunction.h"
 //using namespace System;
 //using namespace System::Windows::Forms;
+
 using namespace std;
 
 /*[STAThread]
@@ -92,7 +93,6 @@ int main()
     char b = '\0';
 
     bool f=0;
-    //char NameFile[6];
     label: int i;
     srand(time(NULL));
 
@@ -124,7 +124,6 @@ int main()
                 b = bufer[bufer.length()-2];
             }
             cout<<"Я повинна сказати слово на букву - "<<b<<endl;
-            //NameFile[0] == b;//Шукаємо відповідь в файлі
             file.open(filename.c_str(),ios_base::in);
 
             string word;
@@ -161,10 +160,11 @@ int main()
             }
 
         do{
-
+        srand(time(NULL));
         getword(bufer,filename,setsize,i,line2);
-        //searchinLOG(word);
        // srand(time(NULL));
+       // i=random(setsize);
+        //searchinLOG(word);
        // i=random(setsize);
        // string &line2=word;
        // cout << line2<<endl;
@@ -172,7 +172,7 @@ int main()
         //word = Random[i];
         //cout << line2 << "   DBG ";
         word = line2;
-
+        searchinLOG(word);
         LOGAD(word);
         } while (searchinLOG == 0);
 
@@ -205,10 +205,11 @@ int main()
                     rulespintf(bufer);
                 }
             }
+            searchinLOG(bufer);
 
             ConverttoLow(bufer);
 
-            if(searchinLOG(bufer))
+            if(searchinLOG(bufer) == 1)
             {
                 cout<<"Не хитруй!\nЦе слово вже використовувалось."<<endl;
                 continue;

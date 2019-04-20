@@ -1,8 +1,5 @@
-//#ifndef Gamefunc
-//#define Gamefunc
-
 using namespace std;
-
+typedef ostream_iterator<string> output_str;
 void rulespintf(string & bufer)
 {
     string rules;
@@ -37,27 +34,33 @@ bool searchinLOG(string & word) // Чи є слово в лозі?
 {
     vector<string> wordis;
     string line;
-    int vec_size=0;
     ifstream LOG("LOGS.txt",ios_base::in);
     while(!LOG.eof())
     {
-        LOG>>line;
-        wordis.push_back(line);
-        vec_size++;
-        for (int i=0;i<vec_size ;i++)
+        getline(LOG,line);
+        cout << line<<endl;//cout<<endl;
+       // cout << line<<endl;
+/*for (int i=0; i<500; i++) // ШОТО НАМІНЯВ
         {
-            cout <<"SIZE "<< vec_size;
+            getline(LOG,line[i]);
+            wordis.push_back(line[i]);*/
+        wordis.push_back(line);
+        for (int i=0;i<wordis.size();)
+        {
             if (wordis[i] == word)
             {
-                cout<<wordis[i]<<" HELO"<<endl;
+               // cout<<wordis[i]<<" HELO"<<endl<<endl;
                 wordis.clear();
                 return 1;
             }
+            i++;
         }
-        wordis.clear();
-        return 0;
     }
-    wordis.clear();
+    //cout <<"wordis.size "<< wordis.size()<<endl;
+    //cout <<"vec_size "<< vec_size<<endl;
+    //copy(wordis.begin(), wordis.end(), output_str(std::cout, "\n") );
+   // cout<<endl;
+   // cout << searchinLOG;
     return 0;
 }
 
@@ -88,23 +91,23 @@ string getword(string & bufer, string & filename,int & setsize,int &i,string &li
         {
             getline(file,line[i]);
             bufer.length();
-            //cout << "line 3 " << line[i]<< endl;
-    if  (line[i][0] == bufer[bufer.length()-1]) // чи перша буква зчитаного = останній букві введеного bufer[50][bufer[50].length()
-        {
-            word.push_back(line[i]);
-            setsize++;
+            if  (line[i][0] == bufer[bufer.length()-1]) // чи перша буква зчитаного = останній букві введеного bufer[50][bufer[50].length()
+            {
+                word.push_back(line[i]);
+                setsize++;
             }
         }
     }
-    //copy(word.begin(), word.end(), output_str(std::cout, "\n") );
+   // copy(word.begin(), word.end(), output_str(std::cout, "\n") );
     file.close();
-    do{
+
     srand(time(NULL));
     i=random(setsize);
+    cout << i << " I";
     line2=word.at(i);
-    searchinLOG(line2);
-    cout << searchinLOG;
-    }while (searchinLOG == 0);
+    //searchinLOG(line2);
+   // cout << searchinLOG;
+   // }while (searchinLOG == 0);
     return line2;
 }
 
