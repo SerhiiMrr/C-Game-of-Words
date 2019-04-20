@@ -1,5 +1,5 @@
-#ifndef Gamefunc
-#define Gamefunc
+//#ifndef Gamefunc
+//#define Gamefunc
 
 using namespace std;
 
@@ -19,7 +19,7 @@ void rulespintf(string & bufer)
 }
 bool IfwordsHight(char b) // Перевірка чи букви великі
 {
-    if(b>'А'-1&&b<'Ю'+1)
+    if(b>'А'-1&&b<'Я'+1)
         return 1;
     return 0;
 }
@@ -35,16 +35,29 @@ void ConverttoLow(string& b)// перетворення букв в маленькі
 
 bool searchinLOG(string & word) // Чи є слово в лозі?
 {
-    string wordis = "";
+    vector<string> wordis;
+    string line;
+    int vec_size=0;
     ifstream LOG("LOGS.txt",ios_base::in);
     while(!LOG.eof())
+    {
+        LOG>>line;
+        wordis.push_back(line);
+        vec_size++;
+        for (int i=0;i<vec_size ;i++)
         {
-            LOG >> wordis;
-            if(word == wordis)
+            cout <<"SIZE "<< vec_size;
+            if (wordis[i] == word)
             {
+                cout<<wordis[i]<<" HELO"<<endl;
+                wordis.clear();
                 return 1;
             }
-     }
+        }
+        wordis.clear();
+        return 0;
+    }
+    wordis.clear();
     return 0;
 }
 
@@ -54,11 +67,19 @@ void LOGAD( string & word) // Записати в лог
     LOG<<word<<endl;
 }
 
-void getword(string & bufer, string & filename,int & setsize)
+int random(int & setsize)
+{
+    srand(time(NULL));
+    int q=0;
+    return q + rand()%setsize;
+}
+
+string getword(string & bufer, string & filename,int & setsize,int &i,string &line2)
 {
     typedef ostream_iterator<string> output_str;
     string line[500];
-    set<string> word;
+    vector<string> word;
+    word.clear();
     setsize=0;
     ifstream file (filename.c_str(), ios_base::in); //відкриваємо файл
     while (!file.eof())
@@ -67,42 +88,26 @@ void getword(string & bufer, string & filename,int & setsize)
         {
             getline(file,line[i]);
             bufer.length();
-
-       // cout << "line 3 " << line[i]<< endl;
-       // cout << bufer[50][bufer[50].length()-1];
+            //cout << "line 3 " << line[i]<< endl;
     if  (line[i][0] == bufer[bufer.length()-1]) // чи перша буква зчитаного = останній букві введеного bufer[50][bufer[50].length()
         {
-           word.insert(line[i]);
+            word.push_back(line[i]);
             setsize++;
             }
         }
     }
     //copy(word.begin(), word.end(), output_str(std::cout, "\n") );
-    word.clear();
     file.close();
-}
-
-int random(int & setsize)
-{
+    do{
     srand(time(NULL));
-    int q=0;
-    return q + rand()%setsize;
+    i=random(setsize);
+    line2=word.at(i);
+    searchinLOG(line2);
+    cout << searchinLOG;
+    }while (searchinLOG == 0);
+    return line2;
 }
-/*const int len = 30, strings = 5;
-	const char ch = '\n';
-	char mass[len][strings];
 
-	ifstream fs("strings.txt", ios::in | ios::binary);
-
-	if(!fs) return 1; //Если ошибка открытия файла, то завершаем программу
-
-	for(int r = 0; r<strings; r++)
-	{
-		fs.getline(mass[r], len-1,ch); //Считываем строки в массив
-		cout << "String " << r+1 << " = "<< mass[r] << endl; //Выводи строку из массива
-	}
-	fs.close(); //Закрываем файл
-	return 0;*/
 
 bool rightword(string & bufer, string & filename)
  {
@@ -126,10 +131,10 @@ bool exit(string & bufer)
             cout << "Ти чудовий гравець, дякую за гру!\nПовертайся!!!"<<endl;
             return 0;
         }
-        else return 1;
+        //else return 1;
 }
 
-#endif  Gamefunc
+//#endif  Gamefunc
     /*ifstream in("slova.cpp",ios::binary);
     //set<char>buf;
     int size = in.seekg(0,ios::end).tellg();

@@ -1,12 +1,14 @@
 #include <iostream>
 #include <string>
+//#include <cstring>
 #include <stdlib.h>
 #include <windows.h>
-#include <fstream>  // ЩОБ ВИВОДИЛО СЛОВА ЧЕРЕЗ ПРОБІЛИ!!!!!!!!!!!!!!!!
+#include <fstream>  // ВВОДИТИ СЛОВА З ПРОБІЛАМИ LOGAD SEARCHINLOG і тд
 #include <conio.h>
 #include <iterator>
 #include <algorithm>
 #include <set>
+#include <vector>
 #include <ctime>
 #include "Gamefunction.h"
 //using namespace System;
@@ -39,14 +41,14 @@ int main()
     system("cls");
 
     string bufer = "правила";
-    rulespintf(bufer);
+    //rulespintf(bufer);
 
     ifstream LOGF("LOGS.txt",ios_base::in);
     system("cls");
     string filename;
-    int z;
+    //int z;
     int setsize=0;
-    for (;;)
+    while(true)
     {
         cout << " Напиши 'міста', щоб вибрати тему гри 'міста України'\n\t'країни', щоб вибрати тему гри 'країни світу (члени ООН)' \n\t'прізвища', щоб вибрати тему 'Прізвища 143 групи'"<<endl;
         getline(cin,bufer);
@@ -54,27 +56,27 @@ int main()
         {
             return 0;
         }
-        if (bufer == "Правила" || bufer == "правила")
+        else if (bufer == "Правила" || bufer == "правила")
         {
              rulespintf(bufer);
              cout << "Введіть слово:";
              bufer="";
         }
-        if ((bufer == "міста") || ( bufer == "Міста"))
+        else if ((bufer == "міста") || ( bufer == "Міста"))
         {
             system("cls");
             cout << "Ти вибрав тему 'міста України'. Отож, починаємо гру!\nВведи слово - ";
             filename = "міста.cpp";
             break;
         }
-        if ((bufer == "країни") || ( bufer == "Країни"))
+        else if ((bufer == "країни") || ( bufer == "Країни"))
         {
             system("cls");
             cout << "Ти вибрав тему 'країни світу (члени ООН)'. Отож, починаємо гру!\nВведи слово - ";
             filename = "країни.cpp";
             break;
         }
-        if ((bufer == "прізвища") || ( bufer == "Прізвища"))
+        else if ((bufer == "прізвища") || ( bufer == "Прізвища"))
         {
             system("cls");
             cout << "Ти вибрав тему 'Прізвища 143 групи'. Отож, починаємо гру!\nВведи слово - ";
@@ -85,11 +87,12 @@ int main()
     }
 
     string Random[100];
+    string line2;
     bufer="";
-    char b;
+    char b = '\0';
 
     bool f=0;
-    char NameFile[6];
+    //char NameFile[6];
     label: int i;
     srand(time(NULL));
 
@@ -123,29 +126,17 @@ int main()
             cout<<"Я повинна сказати слово на букву - "<<b<<endl;
             //NameFile[0] == b;//Шукаємо відповідь в файлі
             file.open(filename.c_str(),ios_base::in);
-            char word;
-           // word = "";
+
+            string word;
+            word = "";
+
             i=0;//ітератор
 
             while(!file.eof())
             {
                 f=1;//добавить слово в обработку
-               /*while (word[word.length()] ==' ')
-                {
-                if (word[word.length()+1] != ' ')
-                {
-*/
- ///////////////////// ОТУУУУУУУУУУУУУУУУУУУУУУУУУУТ
-                file>>word;//новое слово в словаре
-                if (word[strlen(word)] == ' ')
-                {
+                file>>word;// нове слово
 
-                char word2;
-                //word2="";
-                file >> word2;
-                strcat(word2,word)
-                cout << word2 << "HAHAHH"<<endl;
-}
                 f = !(searchinLOG(word));
                 if( word[0] != b )
                     f=0;
@@ -168,25 +159,25 @@ int main()
                 cin.get();
                 return 0;
             }
-       //for (int i=0; i<)
-        //i=getword(bufer,filename,setsize);
 
-        getword(bufer,filename,setsize);
-        srand(time(NULL));
-        i=random(setsize);
+        do{
+
+        getword(bufer,filename,setsize,i,line2);
+        //searchinLOG(word);
+       // srand(time(NULL));
+       // i=random(setsize);
+       // string &line2=word;
+       // cout << line2<<endl;
        // cout << random(setsize)<<"RAНD"<<endl;
-        word=Random[i];
+        //word = Random[i];
+        //cout << line2 << "   DBG ";
+        word = line2;
+
         LOGAD(word);
-
-
-        while((word.find('\n') == string::npos) != 1);
-        {
-
-
+        } while (searchinLOG == 0);
 
         cout<<"Моя відповідь - ";
         cout<<word<<endl;
-        }
         b = word[word.length()-1];
         cout<<"Тобі на букву - "<<b<<endl;
 
